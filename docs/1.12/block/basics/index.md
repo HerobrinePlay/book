@@ -106,24 +106,18 @@ Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getI
 
 ```json
 {
-    "variants": {
-        "normal": { "model": "tut:best_stone" }
-    }
+  "forge_marker": 1,
+  "defaults": {
+    "model": "tut:best_stone"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{
+      "transform": "forge:default-block"
+    }]
+  }
 }
 ```
-
-Теперь Вы должны создать тип рендера блока, Вы можете создать как стандартный тип рендера блока, примером может послужить камень, так и тип рендера в виде  модели. Вот пример стандартного типа рендера:
-
-```json
-{
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "tut:blocks/best_stone"
-    }
-}
-```
-
-Название файла должно быть таким же как и в `blockstates` -> `best_stone`, в переменной `model`!
 
 
 Теперь Вам надо создать `best_stone.json`. По пути:
@@ -134,33 +128,16 @@ Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getI
             └── assets
                 └── tut
                     └── models
-                        └── item
+                        └── block
 ```
-Пример:
+И написать в нём:
 ```json
 {
-    "parent": "tut:block/best_stone"
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "tut:blocks/best_stone"
+  }
 }
-```
-
-[Модель](https://yadi.sk/d/n9ehtKYk3LT9qv)
-
-В этом файле будет хранится информация о состояниях блоков. (Подробнее про состояние блоков, вы сможете прочитать в следующей статье)
-
-Если ваша текстура к модели берётся из самого Minecraft, то `tut:`(modid) прописывать не надо! В примере с объёмной моделью я решил использовать текстуру камня из Minecraft.
-
-`tut` - modid нашего мода.
-`best_stone` - регистрируемое имя нашего блока.
-
-Когда ваша модель готово, добавьте её по пути:
-```md
-└── src    
-    └── main
-        └── resources
-            └── assets
-                └── tut
-                    └── models
-                        └── block
 ```
 
 Добавим в ClientProxy, в метод init такой код  `BlocksRegister.registerRender();`.
